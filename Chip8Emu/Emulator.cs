@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CommandLine;
+using System.Threading.Tasks;
 
 namespace Chip8Emu
 {
@@ -23,26 +24,38 @@ namespace Chip8Emu
                 .WithNotParsed<CLIOptions>((errs) => HandleParseError(errs));
         }
 
-        static void StartEmulating(CLIOptions options)
+        static Timer timer;
+        static async void StartEmulating(CLIOptions options)
         {
-            Screen screen = new Screen(options.Scale);
             Keyboard keyboard = new Keyboard(options.KeyboardDelay);
-
+            Screen screen = new Screen(options.Scale);
             RAM ram = new RAM();
             ram.LoadROM(options.RomPath);
 
             CPU cpu = new CPU(screen, ram, keyboard);
-            Timer timer = new Timer(60);
+            timer = new Timer(60);
 
             timer.OnTick += () => cpu.TimerTick();
             screen.OnResumed += () => timer.Restart();
 
+            UpdateTimerAsync();
+
             while (screen.Window.IsOpen)
             {
-                timer.Update();
                 cpu.Tick();
                 screen.Render();
             }
+        }
+
+        static async void UpdateTimerAsync()
+        {
+            await Task.Factory.StartNew(()=>
+            {
+                while (true)
+                {
+                    timer.Update();
+                }
+            });
         }
 
         private static void HandleParseError(IEnumerable<Error> errs)

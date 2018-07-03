@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Chip8Emu
 {
@@ -38,6 +39,7 @@ namespace Chip8Emu
             instructions = Instructions.GetInstructions();
 
             PC = RAM.ROM_OFFSET;
+
         }
 
         public void Execute()

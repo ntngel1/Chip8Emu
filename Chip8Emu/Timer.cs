@@ -1,4 +1,5 @@
 ﻿using SFML.System;
+using System;
 
 namespace Chip8Emu
 {
@@ -31,6 +32,7 @@ namespace Chip8Emu
 
             if (deltaTime >= timeUntilTick)
             {
+                Console.WriteLine("INVOKING A METHOD, DELTA = {0}", deltaTime);
                 OnTick?.Invoke();
                 deltaTime = 0;
             }
