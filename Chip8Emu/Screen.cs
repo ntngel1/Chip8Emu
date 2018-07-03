@@ -110,13 +110,8 @@ namespace Chip8Emu
                     int pixelPos = (int)(i * 8 + bit);
                     bool pixel = sprites[pixelPos];
 
-                    uint xPos = x + 7 - bit;
-                    uint yPos = y + i;
-
-                    if (xPos > PIXELS_WIDTH - 1)
-                        xPos = 0;
-                    if (yPos > PIXELS_HEIGHT - 1)
-                        yPos = 0;
+                    int xPos = (int)(x + 7 - bit) % 64;
+                    int yPos = (int)(y + i) % 32;
 
                     bool currentPixelValue = pixels[xPos, yPos];
                     pixels[xPos, yPos] ^= pixel;
