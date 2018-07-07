@@ -16,4 +16,5 @@ Also you can specify some parameters:
 
 ## Some interesting resources
 [Here you can download a little pack of CHIP-8 games](https://www.zophar.net/pdroms/chip8/chip-8-games-pack.html)
+
 Also I used [this documentation](http://devernay.free.fr/hacks/chip8/C8TECH10.HTM) to write my emulator.
